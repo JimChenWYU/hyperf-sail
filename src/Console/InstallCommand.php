@@ -33,12 +33,15 @@ class InstallCommand extends Command
     {
         $with = $this->input->getOption('with');
         if ($with) {
-            $services = $with == 'none' ? [] : explode(',', $with);
+            $services = ($with === 'none' ? [] : explode(',', $with));
         } elseif ($this->input->getOption('no-interaction')) {
             $services = ['mysql', 'redis', 'selenium', 'mailhog'];
         } else {
             $services = $this->gatherServicesWithSymfonyMenu();
         }
+
+        $this->buildDockerCompose($services);
+        $this->replaceEnvVariables($services);
 
         $this->info('Sail scaffolding installed successfully.');
     }
