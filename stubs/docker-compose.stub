@@ -2,10 +2,8 @@ version: '3'
 services:
     hyperf.test:
         build:
-            context: ./vendor/jimchen/hyperf-sail/runtimes/7.2
+            context: ./docker/7.2
             dockerfile: Dockerfile
-            args:
-                app_path: {{basePath}}
         image: sail-7.2/app
         ports:
             - 9501:9501
