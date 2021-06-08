@@ -20,6 +20,5 @@ services:
 {{services}}
 networks:
     sail:
-        external: true
         driver: bridge
 {{volumes}}
