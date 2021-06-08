@@ -1,0 +1,32 @@
+{
+    "name": "jimchen/hyperf-sail",
+    "description": "模仿laravel/sail，兼容hyperf",
+    "keywords": ["hyperf", "docker"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "JimChen",
+            "email": "imjimchen@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "hyperf/command": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hyperf\\Sail\\": "src"
+        }
+    },
+    "bin": [
+        "bin/sail"
+    ],
+    "extra": {
+        "hyperf": {
+            "config": "Hyperf\\Sail\\ConfigProvider"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

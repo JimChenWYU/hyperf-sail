@@ -1,0 +1,24 @@
+version: '3'
+services:
+    hyperf.test:
+        build:
+            context: ./vendor/jimchen/hyperf-sail/runtimes/7.2
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-7.2/app
+        ports:
+            - '${APP_PORT:-80}:80'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            HYPERF_SAIL: 1
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+{{depends}}
+{{services}}
+networks:
+    sail:
+        driver: bridge
+{{volumes}}
