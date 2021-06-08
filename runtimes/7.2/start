@@ -2,4 +2,4 @@
 
 composer install --no-dev -o
 
-php bin/hyperf.php start
+php /var/www/bin/hyperf.php start
