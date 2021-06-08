@@ -22,6 +22,13 @@ class PublishCommand extends Command
      */
     protected $description = 'Publish the Hyperf Sail Docker files';
 
+    public function __construct(string $name = null)
+    {
+        parent::__construct($name);
+
+        $this->setDescription($this->description);
+    }
+
     public function handle()
     {
         file_put_contents(

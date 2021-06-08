@@ -22,6 +22,13 @@ class InstallCommand extends Command
      */
     protected $description = 'Install Hyperf Sail\'s default Docker Compose file';
 
+    public function __construct(string $name = null)
+    {
+        parent::__construct($name);
+
+        $this->setDescription($this->description);
+    }
+
     public function handle()
     {
         $with = $this->input->getOption('with');
