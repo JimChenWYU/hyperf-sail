@@ -13,6 +13,9 @@
         "php": ">=7.2",
         "hyperf/command": "^2.0"
     },
+    "suggests": {
+        "hyperf/hyperf": "A coroutine framework that focuses on hyperspeed and flexibility. Building microservice or middleware with ease."
+    },
     "autoload": {
         "psr-4": {
             "Hyperf\\Sail\\": "src"
