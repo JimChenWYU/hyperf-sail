@@ -14,6 +14,14 @@ class ConfigProvider
                 InstallCommand::class,
                 PublishCommand::class,
             ],
+            'publish' => [
+                [
+                    'id' => 'docker',
+                    'description' => 'The docker file.',
+                    'source' => __DIR__ . '/../runtimes/',
+                    'destination' => BASE_PATH . '/docker/',
+                ],
+            ],
         ];
     }
 }
