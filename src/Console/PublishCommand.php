@@ -31,6 +31,10 @@ class PublishCommand extends Command
 
     public function handle()
     {
+        $this->call('vendor:publish', [
+            'package' => 'jimchen/hyperf-sail'
+        ]);
+
         file_put_contents(
             $this->basePath('docker-compose.yml'),
             str_replace(
