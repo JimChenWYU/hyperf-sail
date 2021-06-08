@@ -44,9 +44,9 @@ class PublishCommand extends Command
                     './vendor/jimchen/hyperf-sail/runtimes/7.4',
                 ],
                 [
-                    './docker/7.4',
-                    './docker/7.3',
                     './docker/7.2',
+                    './docker/7.3',
+                    './docker/7.4',
                 ],
                 file_get_contents($this->basePath('docker-compose.yml'))
             )
