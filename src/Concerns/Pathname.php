@@ -1,8 +1,8 @@
 <?php
 
-namespace Hyperf\Sail\Console;
+namespace Hyperf\Sail\Concerns;
 
-trait PathConcern
+trait Pathname
 {
     public function basePath($path = '')
     {

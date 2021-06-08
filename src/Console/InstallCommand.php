@@ -3,10 +3,11 @@
 namespace Hyperf\Sail\Console;
 
 use Hyperf\Command\Command;
+use Hyperf\Sail\Concerns;
 
 class InstallCommand extends Command
 {
-    use PathConcern;
+    use Concerns\Pathname;
 
     /**
      * The name and signature of the console command.
