@@ -13,7 +13,7 @@ services:
             WWWUSER: '${WWWUSER}'
             HYPERF_SAIL: 1
         volumes:
-            - '.:/var/www/html'
+            - '.:/var/www'
         networks:
             - sail
 {{depends}}
