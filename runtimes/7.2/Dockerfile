@@ -13,6 +13,7 @@ LABEL maintainer="Hyperf Developers <group@hyperf.io>" version="1.0" license="MI
 ##
 # --build-arg timezone=Asia/Shanghai
 ARG timezone
+ARG app_path
 
 ENV TIMEZONE=${timezone:-"Asia/Shanghai"} \
     APP_ENV=prod \
@@ -46,7 +47,7 @@ WORKDIR /var/www
 # COPY ./composer.* /opt/www/
 # RUN composer install --no-dev --no-scripts
 
-COPY . /var/www
+COPY ${app_path} /var/www
 RUN composer install --no-dev -o && php bin/hyperf.php
 
 EXPOSE 9501
