@@ -13,7 +13,7 @@
         "php": ">=7.2",
         "hyperf/command": "^2.0"
     },
-    "suggests": {
+    "suggest": {
         "hyperf/hyperf": "A coroutine framework that focuses on hyperspeed and flexibility. Building microservice or middleware with ease."
     },
     "autoload": {
