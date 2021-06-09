@@ -5,9 +5,9 @@ services:
             context: ./
             dockerfile: Dockerfile
             args:
-                PHP_VERSION={{phpversion}}
-                # SW_VERSION=v4.5.7
-                # COMPOSER_VERSION=2.0.2
+                - PHP_VERSION={{phpversion}}
+                # - SW_VERSION=v4.5.7
+                # - COMPOSER_VERSION=2.0.2
         image: sail-{{phpversion}}/app
         ports:
             - 9501:9501
