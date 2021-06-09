@@ -2,7 +2,7 @@ version: '3'
 services:
     hyperf.test:
         build:
-            context: ./docker/7.2
+            context: ./vendor/jimchen/hyperf-sail/runtimes/7.2
             dockerfile: Dockerfile
         image: sail-7.2/app
         ports:
