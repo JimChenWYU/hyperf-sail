@@ -30,7 +30,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Install Hyperf Sail\'s default Docker Compose file';
+    protected $description = 'Install Hyperf Sail\'s default Docker Compose file & Dockerfile';
 
     public function __construct(string $name = null)
     {
@@ -151,12 +151,9 @@ class InstallCommand extends Command
      */
     public function buildDockerfile()
     {
-        $dockerfile = file_get_contents(__DIR__ . '/../../stubs/Dockerfile.stub');
-
-        // Remove empty lines...
-        $dockerfile = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $dockerfile);
-
-        file_put_contents($this->basePath('Dockerfile'), $dockerfile);
+        if (!copy(__DIR__ . '/../../stubs/Dockerfile.stub', $this->basePath('Dockerfile'))) {
+            $this->warn('Copy Dockerfile failed.');
+        }
     }
 
     /**
