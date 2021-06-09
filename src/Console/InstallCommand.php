@@ -111,8 +111,6 @@ class InstallCommand extends Command
         $dockerCompose = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $dockerCompose);
 
         file_put_contents($this->basePath('docker-compose.yml'), $dockerCompose);
-
-        $this->call('sail:publish');
     }
 
     /**
