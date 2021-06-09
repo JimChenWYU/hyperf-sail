@@ -14,7 +14,9 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sail:install {--with= : The services that should be included in the installation}';
+    protected $signature = 'sail:install
+                                {--php=7.4 : The php version}
+                                {--with= : The services that should be included in the installation}';
 
     /**
      * The console command description.
@@ -33,6 +35,15 @@ class InstallCommand extends Command
     public function handle()
     {
         $with = $this->input->getOption('with');
+        $phpversion = $this->input->getOption('php');
+
+        if (! in_array($phpversion, [
+            '7.2', '7.3', '7.4', '8.0'
+        ])) {
+            $this->warn("php-{$phpversion} not supported.");
+            return ;
+        }
+
         if ($with) {
             $services = ($with === 'none' ? [] : explode(',', $with));
         } elseif ($this->input->getOption('no-interaction')) {
@@ -41,7 +52,8 @@ class InstallCommand extends Command
             $services = $this->gatherServicesWithSymfonyMenu();
         }
 
-        $this->buildDockerCompose($services);
+        $this->buildDockerfile();
+        $this->buildDockerCompose($services, $phpversion);
         $this->replaceEnvVariables($services);
 
         $this->info('Sail scaffolding installed successfully.');
@@ -70,10 +82,11 @@ class InstallCommand extends Command
     /**
      * Build the Docker Compose file.
      *
-     * @param  array  $services
+     * @param array  $services
+     * @param string $phpversion
      * @return void
      */
-    protected function buildDockerCompose(array $services)
+    protected function buildDockerCompose(array $services, string $phpversion)
     {
         $depends = collect($services)
             ->filter(function ($service) {
@@ -103,6 +116,7 @@ class InstallCommand extends Command
 
         $dockerCompose = file_get_contents(__DIR__ . '/../../stubs/docker-compose.stub');
 
+        $dockerCompose = str_replace('{{phpversion}}', $phpversion, $dockerCompose);
         $dockerCompose = str_replace('{{depends}}', empty($depends) ? '' : '        ' . $depends, $dockerCompose);
         $dockerCompose = str_replace('{{services}}', $stubs, $dockerCompose);
         $dockerCompose = str_replace('{{volumes}}', $volumes, $dockerCompose);
@@ -111,6 +125,19 @@ class InstallCommand extends Command
         $dockerCompose = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $dockerCompose);
 
         file_put_contents($this->basePath('docker-compose.yml'), $dockerCompose);
+    }
+
+    /**
+     * Build the Dockerfile.
+     */
+    public function buildDockerfile()
+    {
+        $dockerfile = file_get_contents(__DIR__ . '/../../stubs/Dockerfile.stub');
+
+        // Remove empty lines...
+        $dockerfile = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $dockerfile);
+
+        file_put_contents($this->basePath('Dockerfile'), $dockerfile);
     }
 
     /**
