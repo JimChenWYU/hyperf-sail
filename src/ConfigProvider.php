@@ -3,7 +3,6 @@
 namespace Hyperf\Sail;
 
 use Hyperf\Sail\Console\InstallCommand;
-use Hyperf\Sail\Console\PublishCommand;
 
 class ConfigProvider
 {
@@ -12,7 +11,6 @@ class ConfigProvider
         return [
             'commands' => [
                 InstallCommand::class,
-                PublishCommand::class,
             ],
             'publish' => [
                 [

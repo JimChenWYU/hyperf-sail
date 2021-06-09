@@ -15,8 +15,15 @@ class InstallCommand extends Command
      * @var string
      */
     protected $signature = 'sail:install
-                                {--php=7.4 : The php version}
+                                {--php= : The php version}
                                 {--with= : The services that should be included in the installation}';
+
+    const PHP_VERSION_FIELDS = [
+        '7.2',
+        '7.3',
+        '7.4',
+        '8.0',
+    ];
 
     /**
      * The console command description.
@@ -37,11 +44,13 @@ class InstallCommand extends Command
         $with = $this->input->getOption('with');
         $phpversion = $this->input->getOption('php');
 
-        if (! in_array($phpversion, [
-            '7.2', '7.3', '7.4', '8.0'
-        ])) {
-            $this->warn("php-{$phpversion} not supported.");
-            return ;
+        if ($phpversion) {
+            if (! in_array($phpversion, self::PHP_VERSION_FIELDS)) {
+                $this->warn("PHP {$phpversion} not supported.");
+                return ;
+            }
+        } else {
+            $phpversion = $this->gatherPhpVersionWithSymfonyMenu();
         }
 
         if ($with) {
@@ -57,6 +66,16 @@ class InstallCommand extends Command
         $this->replaceEnvVariables($services);
 
         $this->info('Sail scaffolding installed successfully.');
+    }
+
+    /**
+     * Gather the desired PHP version using a Symfony menu.
+     *
+     * @return string
+     */
+    protected function gatherPhpVersionWithSymfonyMenu()
+    {
+        return $this->choice('Which php version would you like to build?', self::PHP_VERSION_FIELDS, 0, null);
     }
 
     /**
